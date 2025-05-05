@@ -1,0 +1,17 @@
+E:\Matrials\Compiler project\Compiler\Compiler\bin\Debug\net8.0-windows\Compiler.exe
+E:\Matrials\Compiler project\Compiler\Compiler\bin\Debug\net8.0-windows\Compiler.deps.json
+E:\Matrials\Compiler project\Compiler\Compiler\bin\Debug\net8.0-windows\Compiler.runtimeconfig.json
+E:\Matrials\Compiler project\Compiler\Compiler\bin\Debug\net8.0-windows\Compiler.dll
+E:\Matrials\Compiler project\Compiler\Compiler\bin\Debug\net8.0-windows\Compiler.pdb
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.Form1.resources
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.csproj.GenerateResource.cache
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.GeneratedMSBuildEditorConfig.editorconfig
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.AssemblyInfoInputs.cache
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.AssemblyInfo.cs
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.csproj.CoreCompileInputs.cache
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.sourcelink.json
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.dll
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\refint\Compiler.dll
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.pdb
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.genruntimeconfig.cache
+E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\ref\Compiler.dll
