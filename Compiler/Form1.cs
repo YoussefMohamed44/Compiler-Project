@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -181,102 +181,170 @@ namespace Compiler
             {
                 if (currentIndex < tokens.Count && tokens[currentIndex].Item2 == expected)
                 {
+                    currentIndex++;  // Move to the next token after a match
+                    return true;
+                }
+                else
+                {
+                    // Debug output to see what's going wrong
+                    Console.WriteLine($"Match failed at index {currentIndex}: Expected {expected}, but found {tokens[currentIndex].Item2} ({tokens[currentIndex].Item3})");
+                    return false;
+                }
+            }
+
+
+            bool MatchKeyword(string keyword)
+            {
+                if (currentIndex < tokens.Count &&
+                    tokens[currentIndex].Item2 == "keyword" &&
+                    tokens[currentIndex].Item3 == keyword)
+                {
                     currentIndex++;
                     return true;
                 }
                 return false;
             }
 
-            bool MatchKeyword(string keyword)
-            {
-                return Match("keyword") && tokens[currentIndex - 1].Item3 == keyword;
-            }
-
             bool TypeSpecifier()
             {
-                return Match("keyword") &&
-                       (tokens[currentIndex - 1].Item3 == "int" || tokens[currentIndex - 1].Item3 == "void" ||
-                        tokens[currentIndex - 1].Item3 == "float" || tokens[currentIndex - 1].Item3 == "char");
+                if (Match("keyword"))
+                {
+                    string currentToken = tokens[currentIndex - 1].Item3; // Get the token's value
+                    return currentToken == "int" || currentToken == "void" || currentToken == "float" || currentToken == "char";
+                }
+                return false;
             }
+
+
 
             bool Declaration()
             {
                 int backup = currentIndex;
-                if (TypeSpecifier())
+
+                if (!TypeSpecifier())
                 {
-                    if (!Match("id")) return false;
-                    while (Match("comma")) if (!Match("id")) return false;
-                    if (!Match("semicolon")) return false;
-                    return true;
+                    currentIndex = backup;
+                    return false;
                 }
-                currentIndex = backup;
-                return false;
+
+                if (!Match("id"))
+                {
+                    return false;
+                }
+
+                // Support optional initialization
+                if (Match("assign"))
+                {
+                    if (!Expression())
+                    {
+                        return false;
+                    }
+                }
+
+                // Support multiple declarations separated by commas
+                while (Match("comma"))
+                {
+                    if (!Match("id"))
+                    {
+                        return false;
+                    }
+
+                    // Optional initialization for subsequent declarations
+                    if (Match("assign"))
+                    {
+                        if (!Expression())
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                if (!Match("semicolon"))
+                {
+                    return false;
+                }
+
+                return true;
             }
+
 
             bool FunctionDeclaration()
             {
                 int backup = currentIndex;
-                if (TypeSpecifier())
+
+                // Check the type specifier (e.g., int, float, void)
+                if (!TypeSpecifier())  // Make sure this is correctly matching 'int'
                 {
-                    if (!Match("id"))
-                    {
-                        errorMessage = $"Expected function name at line {tokens[currentIndex].Item1}";
-                        return false;
-                    }
-                    string funcName = tokens[currentIndex - 1].Item3;
-                    if (!Match("left parenthesis"))
-                    {
-                        errorMessage = $"Expected '(' after function name at line {tokens[currentIndex].Item1}";
-                        return false;
-                    }
-                    if (!Match("right parenthesis"))
-                    {
-                        while (currentIndex < tokens.Count)
-                        {
-                            if (!TypeSpecifier())
-                            {
-                                errorMessage = $"Expected parameter type at line {tokens[currentIndex].Item1}";
-                                return false;
-                            }
-                            while (Match("multiply")) { }
-                            if (!Match("id"))
-                            {
-                                errorMessage = $"Expected parameter name at line {tokens[currentIndex].Item1}";
-                                return false;
-                            }
-                            while (Match("left bracket") && Match("right bracket")) { }
-                            if (Match("right parenthesis")) break;
-                            if (!Match("comma"))
-                            {
-                                errorMessage = $"Expected ',' or ')' in parameter list at line {tokens[currentIndex].Item1}";
-                                return false;
-                            }
-                        }
-                        if (!Match("right parenthesis"))
-                        {
-                            errorMessage = $"Expected ')' to close parameter list at line {tokens[currentIndex].Item1}";
-                            return false;
-                        }
-                    }
-                    declaredFunctions.Add(funcName);
-                    if (!Match("left brace"))
-                    {
-                        errorMessage = $"Expected '{{' for function body at line {tokens[currentIndex].Item1}";
-                        return false;
-                    }
-                    while (!Match("right brace") && currentIndex < tokens.Count)
-                    {
-                        if (!Statement() && !Declaration())
-                        {
-                            errorMessage = $"Syntax error in function body at line {tokens[currentIndex].Item1}";
-                            return false;
-                        }
-                    }
-                    return true;
+                    currentIndex = backup;
+                    return false;
                 }
-                currentIndex = backup;
-                return false;
+
+                // Check for function name (id)
+                if (!Match("id"))
+                {
+                    errorMessage = $"Expected function name at line {tokens[currentIndex].Item1}";
+                    return false;
+                }
+
+                string funcName = tokens[currentIndex - 1].Item3;
+
+                // Check for left parenthesis after function name
+                if (!Match("left parenthesis"))
+                {
+                    errorMessage = $"Expected '(' after function name at line {tokens[currentIndex].Item1}";
+                    return false;
+                }
+
+                // Parameter list (optional if empty)
+                if (!Match("right parenthesis"))
+                {
+                    // Handle parameters inside the function declaration
+                    while (true)
+                    {
+                        if (!TypeSpecifier())  // Ensure we can match the parameter types
+                        {
+                            errorMessage = $"Expected parameter type at line {tokens[currentIndex].Item1}";
+                            return false;
+                        }
+
+                        if (!Match("id"))
+                        {
+                            errorMessage = $"Expected parameter name at line {tokens[currentIndex].Item1}";
+                            return false;
+                        }
+
+                        if (Match("right parenthesis")) break;
+
+                        if (!Match("comma"))
+                        {
+                            errorMessage = $"Expected ',' or ')' in parameter list at line {tokens[currentIndex].Item1}";
+                            return false;
+                        }
+                    }
+                }
+
+                // Function body
+                if (!Match("left brace"))
+                {
+                    errorMessage = $"Expected '{{' for function body at line {tokens[currentIndex].Item1}";
+                    return false;
+                }
+
+                // Handle function body
+                while (currentIndex < tokens.Count && !Match("right brace"))
+                {
+                    if (!Statement() && !Declaration())
+                    {
+                        errorMessage = $"Syntax error in function body at line {tokens[currentIndex].Item1}";
+                        return false;
+                    }
+                }
+
+                return true;
             }
+
+
+
 
             bool IfStatement()
             {
@@ -313,7 +381,19 @@ namespace Compiler
             bool ExpressionStatement()
             {
                 int backup = currentIndex;
-                if (Expression() && Match("semicolon")) return true;
+
+                // Handle simple expression or assignment
+                if (Match("id"))
+                {
+                    if (Match("assign"))
+                    {
+                        if (!Expression()) return false;  // Ensure we can process the right side expression of the assignment
+                    }
+
+                    if (!Match("semicolon")) return false;  // Ensure the statement ends with a semicolon
+                    return true;
+                }
+
                 currentIndex = backup;
                 return false;
             }
@@ -321,63 +401,126 @@ namespace Compiler
             bool Expression()
             {
                 int backup = currentIndex;
-                // Function call
-                if (Match("id") && Match("left parenthesis"))
+
+                if (!Primary())  // Handles id, number, string, (expr), function calls
                 {
-                    while (!Match("right parenthesis") && currentIndex < tokens.Count)
-                    {
-                        if (!Expression()) return false;
-                        if (!Match("comma") && !Match("right parenthesis")) return false;
-                    }
-                    if (!Match("right parenthesis")) return false;
-                    return true;
+                    currentIndex = backup;
+                    return false;
                 }
-                currentIndex = backup;
-                // Other expression types
-                if (Match("id") || Match("number") || Match("string"))
+
+                // Handle binary operations
+                while (IsBinaryOperator(Peek()))
                 {
-                    while (Match("plus") || Match("minus") || Match("multiply") || Match("divide") ||
-                           Match("less than") || Match("greater than") || Match("equal equal") ||
-                           Match("not equal") || Match("logical and") || Match("logical or") ||
-                           Match("bitwise and") || Match("bitwise or") || Match("xor") ||
-                           Match("mod") || Match("left shift") || Match("right shift"))
+                    Match(Peek());  // consume operator
+                    if (!Primary())
                     {
-                        if (!Match("id") && !Match("number") && !Match("string"))
+                        currentIndex = backup;
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            bool Primary()
+            {
+                int backup = currentIndex;
+
+                if (Match("number") || Match("string"))
+                    return true;
+
+                if (Match("id"))
+                {
+                    // Check for function call
+                    if (Match("left parenthesis"))
+                    {
+                        if (!Match("right parenthesis"))
                         {
-                            currentIndex = backup;
-                            return false;
+                            do
+                            {
+                                if (!Expression())
+                                {
+                                    currentIndex = backup;
+                                    return false;
+                                }
+                            } while (Match("comma"));
+
+                            if (!Match("right parenthesis"))
+                            {
+                                currentIndex = backup;
+                                return false;
+                            }
                         }
                     }
-                    return true;
+
+                    return true;  // It's either a variable or a function call
                 }
+
                 if (Match("left parenthesis"))
                 {
-                    if (!Expression()) return false;
-                    if (!Match("right parenthesis")) return false;
+                    if (!Expression()) { currentIndex = backup; return false; }
+                    if (!Match("right parenthesis")) { currentIndex = backup; return false; }
                     return true;
                 }
+
                 currentIndex = backup;
                 return false;
             }
 
+            bool IsBinaryOperator(string tokenType)
+            {
+                return tokenType == "plus" || tokenType == "minus" || tokenType == "multiply" || tokenType == "divide" ||
+                       tokenType == "less than" || tokenType == "greater than" || tokenType == "equal equal" ||
+                       tokenType == "not equal" || tokenType == "logical and" || tokenType == "logical or" ||
+                       tokenType == "bitwise and" || tokenType == "bitwise or" || tokenType == "xor" ||
+                       tokenType == "mod" || tokenType == "left shift" || tokenType == "right shift";
+            }
+
+            string Peek()
+            {
+                return currentIndex < tokens.Count ? tokens[currentIndex].Item2 : "";
+            }
+
+
+
             bool Statement()
             {
                 int backup = currentIndex;
+
+                // Handle block statement
                 if (Match("left brace"))
                 {
-                    while (!Match("right brace") && currentIndex < tokens.Count)
+                    while (!Check("right brace") && currentIndex < tokens.Count)
                     {
-                        if (!Statement() && !Declaration() && !ReturnStatement())
+                        if (!Declaration() && !ReturnStatement() && !IfStatement() && !ExpressionStatement())
                         {
                             errorMessage = $"Syntax error in block at line {tokens[currentIndex].Item1}";
                             return false;
                         }
                     }
+
+                    if (!Match("right brace"))
+                    {
+                        errorMessage = $"Expected '}}' at line {tokens[currentIndex].Item1}";
+                        return false;
+                    }
+
                     return true;
                 }
+
                 currentIndex = backup;
+
+                // Try other statement types
                 return Declaration() || IfStatement() || ReturnStatement() || ExpressionStatement();
             }
+
+            bool Check(string expectedType)
+            {
+                if (currentIndex >= tokens.Count) return false;
+                return tokens[currentIndex].Item2 == expectedType;
+            }
+
+
 
             bool Program()
             {
@@ -388,14 +531,23 @@ namespace Compiler
                         errorMessage = $"Scanner error at line {tokens[currentIndex].Item1}: {tokens[currentIndex].Item3}";
                         return false;
                     }
-                    if (!Declaration() && !FunctionDeclaration() && !Statement())
+
+                    int backupIndex = currentIndex;
+
+                    if (Declaration() || FunctionDeclaration() || Statement())
                     {
-                        errorMessage = $"Syntax error at line {tokens[currentIndex].Item1}";
-                        return false;
+                        continue;
                     }
+
+                    // restore index in case of failure
+                    currentIndex = backupIndex;
+                    errorMessage = $"Syntax error at line {tokens[currentIndex].Item1}";
+                    return false;
                 }
+
                 return true;
             }
+
 
             bool success = Program();
             return success ? "Parsing successful" : $"Parsing failed: {errorMessage}";
@@ -407,6 +559,12 @@ namespace Compiler
             {
                 listBox1.Items.Clear();
                 var tokens = Scan(textBox1.Text);
+
+                foreach (var token in tokens)
+                {
+                    Console.WriteLine($"{token.Item1}: {token.Item2} => {token.Item3}");
+                }
+
 
                 int maxTokens = 1000;
                 for (int i = 0; i < Math.Min(tokens.Count, maxTokens); i++)

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Matrials\\Compiler project\\Compiler\\Compiler\\Compiler.csproj": {}
+    "C:\\Users\\Ramy\\Desktop\\Compiler-Project\\Compiler\\Compiler.csproj": {}
   },
   "projects": {
-    "E:\\Matrials\\Compiler project\\Compiler\\Compiler\\Compiler.csproj": {
+    "C:\\Users\\Ramy\\Desktop\\Compiler-Project\\Compiler\\Compiler.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Matrials\\Compiler project\\Compiler\\Compiler\\Compiler.csproj",
+        "projectUniqueName": "C:\\Users\\Ramy\\Desktop\\Compiler-Project\\Compiler\\Compiler.csproj",
         "projectName": "Compiler",
-        "projectPath": "E:\\Matrials\\Compiler project\\Compiler\\Compiler\\Compiler.csproj",
-        "packagesPath": "C:\\Users\\TW\\.nuget\\packages\\",
-        "outputPath": "E:\\Matrials\\Compiler project\\Compiler\\Compiler\\obj\\",
+        "projectPath": "C:\\Users\\Ramy\\Desktop\\Compiler-Project\\Compiler\\Compiler.csproj",
+        "packagesPath": "C:\\Users\\Ramy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ramy\\Desktop\\Compiler-Project\\Compiler\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\TW\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Ramy\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -68,7 +68,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.103/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -15,3 +15,20 @@ E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\refint\C
 E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.pdb
 E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\Compiler.genruntimeconfig.cache
 E:\Matrials\Compiler project\Compiler\Compiler\obj\Debug\net8.0-windows\ref\Compiler.dll
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\bin\Debug\net8.0-windows\Compiler.exe
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\bin\Debug\net8.0-windows\Compiler.deps.json
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\bin\Debug\net8.0-windows\Compiler.runtimeconfig.json
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\bin\Debug\net8.0-windows\Compiler.dll
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\bin\Debug\net8.0-windows\Compiler.pdb
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\Compiler.Form1.resources
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\Compiler.csproj.GenerateResource.cache
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\Compiler.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\Compiler.AssemblyInfoInputs.cache
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\Compiler.AssemblyInfo.cs
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\Compiler.csproj.CoreCompileInputs.cache
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\Compiler.sourcelink.json
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\Compiler.dll
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\refint\Compiler.dll
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\Compiler.pdb
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\Compiler.genruntimeconfig.cache
+C:\Users\Ramy\Desktop\Compiler-Project\Compiler\obj\Debug\net8.0-windows\ref\Compiler.dll
