@@ -11,7 +11,6 @@ This project implements a basic compiler (or interpreter) for a small language /
 - Parser (e.g. recursive descent, or grammar-based)  
 - Abstract Syntax Tree (AST) representation  
 - Semantic checks / validations  
-- [Optional] Code generation / execution / intermediate representation  
 
 ## ✅ Purpose
 
